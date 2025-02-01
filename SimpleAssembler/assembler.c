@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "encodings.h"
 
 extern int example(int a, int b);
 extern int addition(int a, int b);
@@ -17,10 +18,9 @@ int main(int argc, char** argv){
     printf("[READ ] : %-30s\n", __assembly_source);
     printf("[WRITE] : %-30s\n", __assembly_ommit );
 
-    int e_result = example(10, 15);
-    int a_result = addition(10, 15);
-    printf("[ EXM ] : %d\n", e_result);
-    printf("[ ADD ] : %d\n", a_result);
+    // Try getting an instruction and encoding it
+    const int encoded = register_address("t3");
+    printf("[ADDR ] : %d\n", encoded);
 
     return 0;
 }

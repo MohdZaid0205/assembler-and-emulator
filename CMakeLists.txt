@@ -16,4 +16,5 @@ file(GLOB_RECURSE ASSEMBLER_SOURCE
     "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.h"
 )
 add_executable(SimpleAssembler ${ASSEMBLER_SOURCE})
+target_include_directories(SimpleAssembler PRIVATE "${CMAKE_SOURCE_DIR}/SimpleAssembler/include/")
 set(${COMPILE_FLAGS} "${COMPILE_FLAGS} -m64")

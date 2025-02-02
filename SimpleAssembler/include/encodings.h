@@ -56,6 +56,16 @@ extern Instruction Instructions[];
  * @return The 5-bit binary address of the register if found; otherwise, -1 to indicate an error.
  */
 const int register_encoding(const char* name);
+
+/**
+ * @brief Encodes the given instruction name into its corresponding structure.
+ *
+ * This function looks up an instruction by its symbolic name and returns an
+ * `Instruction` structure containing the funct7, funct3, opcode, and immediate values.
+ *
+ * @param name The symbolic name of the instruction, e.g., "ADD", "SUB".
+ * @return An `Instruction` structure if the instruction is found; otherwise, a default-initialized structure.
+ */
 Instruction instruction_encoding(const char* name);
 
 #endif

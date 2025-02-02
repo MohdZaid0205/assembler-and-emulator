@@ -2,6 +2,7 @@
 #define REG_ENCODINGS
 
 #define byte char
+#define null -1
 
 /**
  * @struct Register

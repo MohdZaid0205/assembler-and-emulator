@@ -48,10 +48,39 @@ Register ABI_names[] = {
     {"t6", 0b11111}     // Temporary register
 };
 
+Instruction Instructions[] = {
+
+    // Defined all R-Type instructions.
+    {"add", "R", 0b0000000, 0b000, 0b0110011},
+    {"sub", "R", 0b0100000, 0b000, 0b0110011},
+    {"slt", "R", 0b0000000, 0b010, 0b0110011},
+    {"srl", "R", 0b0000000, 0b101, 0b0110011},
+    {"or" , "R", 0b0000000, 0b110, 0b0110011},
+    {"and", "R", 0b0000000, 0b111, 0b0110011},
+
+    // Defined all I-Type instructions and set their funct7 as -1 (null).
+    {"lw"  , "I", null, 0b010, 0b0000011},
+    {"addi", "I", null, 0b000, 0b0010011},
+    {"jalr", "I", null, 0b000, 0b1100111},
+
+    // Defined all S-Type instructions.
+    {"sw", "S", null, 0b010, 0b0100011},
+
+    // Defined all B-Type instructions.
+    {"beq", "B", null, 0b000, 0b1100011},
+    {"bne", "B", null, 0b001, 0b1100011},
+    {"blt", "B", null, 0b100, 0b1100011},
+
+    // Defined all J-Type instructions and set funct3 as null.
+    {"jal", "J", null, null, 0b1101111},
+
+    // TODO: impliment bonus part.  
+};
+
 const int register_address(const char* name){
     for (int i = 0; i < 32; i++){
         if (strcmp(Encodings[i].name, name)==0){ return Encodings[i].address;}
         if (strcmp(ABI_names[i].name, name)==0){ return ABI_names[i].address;}
     }
-    return -1;
+    return null;
 }

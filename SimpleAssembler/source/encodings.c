@@ -1,5 +1,4 @@
 #include "encodings.h"
-#include <string.h>
 
 Register Encodings[] = {
     {"x0",  0b00000}, {"x1",  0b00001}, {"x2",  0b00010}, {"x3",  0b00011},
@@ -90,4 +89,14 @@ Instruction instruction_encoding(const char* name){
         if (strcmp(Instructions[i].name, name) == 0){ return Instructions[i]; }
     }
     return (Instruction){"null", "N", null, null, null};
+}
+
+bool is_valid_register(const char* _reg){
+    if (register_encoding(_reg) == null){ return false; }
+    return true;
+}
+
+bool is_valid_instruction(const char* _ins){
+    if (strcmp(instruction_encoding(_ins).name, "null") == 0){ return false; }
+    return true;
 }

@@ -1,6 +1,9 @@
 #ifndef REG_ENCODINGS
 #define REG_ENCODINGS
 
+#include <stdbool.h>
+#include <string.h>
+
 #define byte char
 #define null -1
 
@@ -67,5 +70,9 @@ const int register_encoding(const char* name);
  * @return An `Instruction` structure if the instruction is found; otherwise, a default-initialized structure.
  */
 Instruction instruction_encoding(const char* name);
+
+// check if given register or instruction is defined as per ISA.
+bool is_valid_register(const char* _reg);
+bool is_valid_instruction(const char* _ins);
 
 #endif

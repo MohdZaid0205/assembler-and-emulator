@@ -27,7 +27,6 @@ typedef struct {
  * - `funct7`: A 7-bit function code used to specify additional operation details.
  * - `funct3`: A 3-bit function code used for operation differentiation.
  * - `opcode`: A unique operation code representing the instruction class.
- * - `immediate`: A constant integer that may be used as an immediate operand for certain instructions.
  */
 typedef struct {
     const char* name;    // Symbolic name of the instruction (e.g., "ADD")
@@ -35,7 +34,6 @@ typedef struct {
     const byte funct7;   // 7-bit function code for additional operation details
     const byte funct3;   // 3-bit function code for operation differentiation
     const byte opcode;   // Operation code representing the instruction class
-    const int immidiate; // Immediate operand used by certain instructions
 } Instruction;
 
 

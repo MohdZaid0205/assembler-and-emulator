@@ -1,5 +1,7 @@
 # assembler-and-emulator
 
+![Banner](https://capsule-render.vercel.app/api?type=venom&height=300&color=timeGradient&text=Assembler%20and%20Emulator&section=header&reversal=false&textBg=false&fontColor=ffffff&fontSize=60&desc=CO%20Project%20CSE_112_2025&descSize=15&descAlignY=63&descAlign=81)
+
 Repository for Computer Organization, Winter 2025 semester, assignment at IIITD.
 
 ## Contributors

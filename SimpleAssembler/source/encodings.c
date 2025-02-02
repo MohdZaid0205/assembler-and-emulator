@@ -77,10 +77,17 @@ Instruction Instructions[] = {
     // TODO: impliment bonus part.  
 };
 
-const int register_address(const char* name){
+const int register_encoding(const char* name){
     for (int i = 0; i < 32; i++){
-        if (strcmp(Encodings[i].name, name)==0){ return Encodings[i].address;}
-        if (strcmp(ABI_names[i].name, name)==0){ return ABI_names[i].address;}
+        if (strcmp(Encodings[i].name, name)==0){ return Encodings[i].address; }
+        if (strcmp(ABI_names[i].name, name)==0){ return ABI_names[i].address; }
     }
     return null;
+}
+
+Instruction instruction_encoding(const char* name){
+    for (int i = 0; i < sizeof(Instructions)/sizeof(Instruction); i++){
+        if (strcmp(Instructions[i].name, name) == 0){ return Instructions[i]; }
+    }
+    return (Instruction){"null", "N", null, null, null};
 }

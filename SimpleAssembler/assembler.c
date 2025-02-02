@@ -19,8 +19,10 @@ int main(int argc, char** argv){
     printf("[WRITE] : %-30s\n", __assembly_ommit );
 
     // Try getting an instruction and encoding it
-    const int encoded = register_address("t3");
+    const int encoded = register_encoding("t3");
+    Instruction instr = instruction_encoding("sub");
     printf("[ADDR ] : %d\n", encoded);
+    printf("[INSTR] : %s %s\n", instr.name, instr.type);
 
     return 0;
 }

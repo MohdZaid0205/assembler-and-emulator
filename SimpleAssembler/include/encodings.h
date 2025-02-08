@@ -1,11 +1,8 @@
 #ifndef REG_ENCODINGS
 #define REG_ENCODINGS
 
-#include <stdbool.h>
-#include <string.h>
-
-#define byte char
-#define null -1
+#include "configs.h"
+#include "pch.h"
 
 /**
  * @struct Register
@@ -17,7 +14,7 @@
  */
 typedef struct {
     const char* name;   // Symbolic name of the register (e.g., "x0")
-    const byte address; // 5-bit binary address of the register
+    const BYTE address; // 5-bit binary address of the register
 } Register;
 
 /**
@@ -34,9 +31,9 @@ typedef struct {
 typedef struct {
     const char* name;    // Symbolic name of the instruction (e.g., "ADD")
     const char* type;    // Symbolic name of instruction type (e.g., "R", "I")
-    const byte funct7;   // 7-bit function code for additional operation details
-    const byte funct3;   // 3-bit function code for operation differentiation
-    const byte opcode;   // Operation code representing the instruction class
+    const BYTE funct7;   // 7-bit function code for additional operation details
+    const BYTE funct3;   // 3-bit function code for operation differentiation
+    const BYTE opcode;   // Operation code representing the instruction class
 } Instruction;
 
 

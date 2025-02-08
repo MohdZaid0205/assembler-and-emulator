@@ -57,21 +57,21 @@ Instruction Instructions[] = {
     {"or" , "R", 0b0000000, 0b110, 0b0110011},
     {"and", "R", 0b0000000, 0b111, 0b0110011},
 
-    // Defined all I-Type instructions and set their funct7 as -1 (null).
-    {"lw"  , "I", null, 0b010, 0b0000011},
-    {"addi", "I", null, 0b000, 0b0010011},
-    {"jalr", "I", null, 0b000, 0b1100111},
+    // Defined all I-Type instructions and set their funct7 as -1 (NONE).
+    {"lw"  , "I", NONE, 0b010, 0b0000011},
+    {"addi", "I", NONE, 0b000, 0b0010011},
+    {"jalr", "I", NONE, 0b000, 0b1100111},
 
     // Defined all S-Type instructions.
-    {"sw", "S", null, 0b010, 0b0100011},
+    {"sw", "S", NONE, 0b010, 0b0100011},
 
     // Defined all B-Type instructions.
-    {"beq", "B", null, 0b000, 0b1100011},
-    {"bne", "B", null, 0b001, 0b1100011},
-    {"blt", "B", null, 0b100, 0b1100011},
+    {"beq", "B", NONE, 0b000, 0b1100011},
+    {"bne", "B", NONE, 0b001, 0b1100011},
+    {"blt", "B", NONE, 0b100, 0b1100011},
 
-    // Defined all J-Type instructions and set funct3 as null.
-    {"jal", "J", null, null, 0b1101111},
+    // Defined all J-Type instructions and set funct3 as NONE.
+    {"jal", "J", NONE, NONE, 0b1101111},
 
     // TODO: impliment bonus part.  
 };
@@ -81,22 +81,22 @@ const int register_encoding(const char* name){
         if (strcmp(Encodings[i].name, name)==0){ return Encodings[i].address; }
         if (strcmp(ABI_names[i].name, name)==0){ return ABI_names[i].address; }
     }
-    return null;
+    return NONE;
 }
 
 Instruction instruction_encoding(const char* name){
     for (int i = 0; i < sizeof(Instructions)/sizeof(Instruction); i++){
         if (strcmp(Instructions[i].name, name) == 0){ return Instructions[i]; }
     }
-    return (Instruction){"null", "N", null, null, null};
+    return (Instruction){"NONE", "N", NONE, NONE, NONE};
 }
 
 bool is_valid_register(const char* _reg){
-    if (register_encoding(_reg) == null){ return false; }
+    if (register_encoding(_reg) == NONE){ return false; }
     return true;
 }
 
 bool is_valid_instruction(const char* _ins){
-    if (strcmp(instruction_encoding(_ins).name, "null") == 0){ return false; }
+    if (strcmp(instruction_encoding(_ins).name, "NONE") == 0){ return false; }
     return true;
 }

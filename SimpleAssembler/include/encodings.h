@@ -55,7 +55,7 @@ extern Instruction Instructions[];
  * @param name The name of the register to search for, e.g., "x0", "sp", "t1".
  * @return The 5-bit binary address of the register if found; otherwise, -1 to indicate an error.
  */
-const int register_encoding(const char* name);
+BYTE register_encoding(const char* name);
 
 /**
  * @brief Encodes the given instruction name into its corresponding structure.

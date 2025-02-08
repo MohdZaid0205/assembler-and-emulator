@@ -11,10 +11,11 @@ project(${PROJ_NAME} ${PROJ_DESC} ${PROJ_LANG} ${PROJ_VERS})
 file(GLOB_RECURSE ASSEMBLER_SOURCE
     "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.c"
     # "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.cu"
-    "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.cpp"
+    # "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.cpp"
     "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.asm"
     "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.h"
 )
 add_executable(SimpleAssembler ${ASSEMBLER_SOURCE})
 target_include_directories(SimpleAssembler PRIVATE "${CMAKE_SOURCE_DIR}/SimpleAssembler/include/")
+target_precompile_headers(SimpleAssembler PRIVATE "${CMAKE_SOURCE_DIR}/SimpleAssembler/include/pch.h")
 set(${COMPILE_FLAGS} "${COMPILE_FLAGS} -m64")

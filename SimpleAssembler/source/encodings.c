@@ -76,7 +76,7 @@ Instruction Instructions[] = {
     // TODO: impliment bonus part.  
 };
 
-const int register_encoding(const char* name){
+BYTE register_encoding(const char* name){
     for (int i = 0; i < 32; i++){
         if (strcmp(Encodings[i].name, name)==0){ return Encodings[i].address; }
         if (strcmp(ABI_names[i].name, name)==0){ return ABI_names[i].address; }

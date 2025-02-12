@@ -2,7 +2,8 @@
 #include "encodings.h"
 
 extern BYTECODE mergeREncoding(BYTE f7, BYTE rs2, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
-extern BYTECODE mergeIEncoding(BYTECODE immidiate, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
+extern BYTECODE mergeIEncoding(int immidiate, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
+extern BYTECODE mergeSEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
 
 BYTECODE translateRType(const char* instruction, const char* rs1, const char* rs2, const char* rd ){
     Instruction encodedINS = instruction_encoding(instruction);
@@ -18,4 +19,12 @@ BYTECODE translateIType(const char* instruction, const char* rs1, const char* im
     BYTE encodedRD_ = register_encoding(rd );
     int encodedIMM = immediate_encoding(imm);
     return mergeIEncoding(encodedIMM, encodedRS1, encodingINS.funct3, encodedRD_, encodingINS.opcode);
+}
+
+BYTECODE translateSType(const char* instruction, const char* rs1, const char* rs2, const char* imm){
+    Instruction encodedINS = instruction_encoding(instruction);
+    BYTE encodedRS1 = register_encoding(rs1);
+    BYTE encodedRS2 = register_encoding(rs2);
+    int encodedIMM = immediate_encoding(imm);
+    return mergeSEncoding(encodedIMM, encodedRS2, encodedRS1, encodedINS.funct3, encodedINS.opcode);
 }

@@ -36,6 +36,19 @@ typedef struct {
     const BYTE opcode;   // Operation code representing the instruction class
 } Instruction;
 
+/**
+ * @enum Immnidiate
+ * @brief Enumeration for immediate value types in the assembler.
+ *
+ * This enumeration defines the different types of immediate values
+ * that can be used in the assembler instructions.
+ */
+enum Immediate {
+    I = 0x00FFF,  ///> Immediate type I, represented by the binary MASK.
+    S = 0x00FFF,  ///> Immediate type S, represented by the binary MASK.
+    B = 0x01FFF,  ///> Immediate type B, represented by the binary MASK.
+    J = 0xFFFFF,  ///> Immediate type J, represented by the binary MASK.
+};
 
 // An array of Register structs representing the 32 general-purpose registers.
 // Defined in encodings.c
@@ -68,8 +81,18 @@ BYTE register_encoding(const char* name);
  */
 Instruction instruction_encoding(const char* name);
 
+/**
+ * @brief Merges the given R-type instruction fields into a single bytecode.
+ * 
+ * This function converts the given Immidiate value to bytecode and returns it.
+ * 
+ * @param value the immidiate value that has to be encoded.
+ */
+int immediate_encoding(const char* value);
+
 // check if given register or instruction is defined as per ISA.
 bool is_valid_register(const char* _reg);
 bool is_valid_instruction(const char* _ins);
+bool is_valid_immediate(const char* _imm, enum Immediate _bound);
 
 #endif

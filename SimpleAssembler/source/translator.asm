@@ -1,5 +1,6 @@
 section .text
     global mergeREncoding
+    global mergeIEncoding
 
 mergeREncoding:
     mov eax, r9d    ; Load the [opcode] parameter (r9d) into the EAX register
@@ -25,6 +26,25 @@ mergeREncoding:
     add eax, ebx    ; and add to EAX
 ret                 ; return the encoded instruction from EAX
 
+mergeIEncoding:
+    mov eax, r8d    ; Load the [opcode] parameter (r9d) into the EAX register
+
+    mov ebx, ecx    ; Load [rd] (r8d) into EBX
+    shl ebx, 0x07   ; shift it left by 7 bits
+    add eax, ebx    ; and add to EAX
+
+    mov ebx, edx    ; Load [f3] (ecx) into EBX
+    shl ebx, 0x0c   ; shift it left by 12 bit
+    add eax, ebx    ; and add to EAX
+
+    mov ebx, esi    ; Load [rs1] (edx) into EBX
+    shl ebx, 0x0f   ; shift it left by 15 bit
+    add eax, ebx    ; and add to EAX
+
+    mov ebx, edi    ; Load Imm[11:0] into edi
+    shl ebx, 0x14   ; shift left by 20 bits
+    add eax, ebx    ; add 12 bits imm to EAX
+ret
 
 
 section .note.GNU-stack

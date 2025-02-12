@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "encodings.h"
 
 Register Encodings[] = {
@@ -91,6 +92,10 @@ Instruction instruction_encoding(const char* name){
     return (Instruction){"NONE", "N", NONE, NONE, NONE};
 }
 
+int immediate_encoding(const char* value){
+    return atoi(value);
+}
+
 bool is_valid_register(const char* _reg){
     if (register_encoding(_reg) == NONE){ return false; }
     return true;
@@ -99,4 +104,17 @@ bool is_valid_register(const char* _reg){
 bool is_valid_instruction(const char* _ins){
     if (strcmp(instruction_encoding(_ins).name, "NONE") == 0){ return false; }
     return true;
+}
+
+bool is_valid_immediate(const char* _imm, enum Immediate _bound){
+    switch (_bound){
+        case I:
+            return -(1<<11) <= immediate_encoding(_imm) <= (1<<11) - 1;
+        case B:
+            return -(1<<12) <= immediate_encoding(_imm) <= (1<<12) - 1;
+        case J:
+            return -(1<<19) <= immediate_encoding(_imm) <= (1<<19) - 1;
+        default:
+            break;
+    }
 }

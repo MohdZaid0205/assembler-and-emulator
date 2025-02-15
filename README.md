@@ -2,6 +2,7 @@
 
 ![Banner](https://capsule-render.vercel.app/api?type=venom&height=300&color=timeGradient&text=Assembler%20and%20Emulator&section=header&reversal=false&textBg=false&fontColor=ffffff&fontSize=60&desc=CO%20Project%20CSE_112_2025&descSize=15&descAlignY=63&descAlign=81)
 
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)

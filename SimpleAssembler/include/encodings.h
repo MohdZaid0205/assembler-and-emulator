@@ -44,10 +44,10 @@ typedef struct {
  * that can be used in the assembler instructions.
  */
 enum Immediate {
-    I = 0x00FFF,  ///> Immediate type I, represented by the binary MASK.
-    S = 0x00FFF,  ///> Immediate type S, represented by the binary MASK.
-    B = 0x01FFF,  ///> Immediate type B, represented by the binary MASK.
-    J = 0xFFFFF,  ///> Immediate type J, represented by the binary MASK.
+    I = 0x00FFF,  // Immediate type I, represented by the binary MASK.
+    S = 0x00FFF,  // Immediate type S, represented by the binary MASK.
+    B = 0x01FFF,  // Immediate type B, represented by the binary MASK.
+    J = 0xFFFFF,  // Immediate type J, represented by the binary MASK.
 };
 
 // An array of Register structs representing the 32 general-purpose registers.

@@ -115,6 +115,6 @@ bool is_valid_immediate(const char* _imm, enum Immediate _bound){
         case J:
             return -(1<<19) <= immediate_encoding(_imm) <= (1<<19) - 1;
         default:
-            break;
+            return false;
     }
 }

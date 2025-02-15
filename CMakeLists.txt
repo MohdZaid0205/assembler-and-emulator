@@ -8,6 +8,10 @@ set(PROJ_DESC DESCRIPTION "Repository for Computer Organization, Winter 2025 sem
 
 project(${PROJ_NAME} ${PROJ_DESC} ${PROJ_LANG} ${PROJ_VERS})
 
+if(WIN32)
+    set(CMAKE_ASM_NASM_FLAGS "-f win64")  # Force win64 format
+endif()
+
 file(GLOB_RECURSE ASSEMBLER_SOURCE
     "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.c"
     # "${CMAKE_SOURCE_DIR}/SimpleAssembler/*.cu"

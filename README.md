@@ -14,5 +14,5 @@ Repository for Computer Organization, Winter 2025 semester, assignment at IIITD.
 
 - [Mohd Zaid](https://github.com/MohdZaid0205)
 - [Rishabh Gupta](https://github.com/RishabhGuptaGH)
-- [Sambhav Jain]("")
+- [Sambhav Jain](https://github.com/Sambhav2415)
 - [Shlok Gupta](https://github.com/Th3D3stroy3r)

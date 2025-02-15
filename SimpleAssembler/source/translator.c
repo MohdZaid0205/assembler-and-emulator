@@ -2,9 +2,10 @@
 #include "encodings.h"
 
 extern BYTECODE mergeREncoding(BYTE f7, BYTE rs2, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
-extern BYTECODE mergeIEncoding(int immidiate, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
+extern BYTECODE mergeIEncoding(int immidiate, BYTE rs1, BYTE f3,  BYTE rd, BYTE opcode);
 extern BYTECODE mergeSEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
 extern BYTECODE mergeBEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
+extern BYTECODE mergeJEncoding(int immidiate, BYTE rd , BYTE opcode);
 
 BYTECODE translateRType(const char* instruction, const char* rs1, const char* rs2, const char* rd ){
     Instruction encodedINS = instruction_encoding(instruction);
@@ -36,4 +37,11 @@ BYTECODE translateBType(const char* instruction, const char* rs1, const char* rs
     BYTE encodedRS2 = register_encoding(rs2);
     int encodedIMM = immediate_encoding(imm);
     return mergeBEncoding(encodedIMM, encodedRS2, encodedRS1, encodedINS.funct3, encodedINS.opcode);
+}
+
+BYTECODE translateJType(const char* instruction, const char* imm, const char* rd ){
+    Instruction encodedINS = instruction_encoding(instruction);
+    BYTE encodedRD_ = register_encoding(rd );
+    int encodedIMM = immediate_encoding(imm);
+    return mergeJEncoding(encodedIMM, encodedRD_, encodedINS.opcode);
 }

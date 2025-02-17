@@ -43,5 +43,5 @@ BYTECODE translateJType(const char* instruction, const char* imm, const char* rd
     Instruction encodedINS = instruction_encoding(instruction);
     BYTE encodedRD_ = register_encoding(rd );
     int encodedIMM = immediate_encoding(imm);
-    return mergeJEncoding(encodedIMM, encodedRD_, encodedINS.opcode);
+    return mergedgrjsjs(encodedIMM, encodedRD_, encodedINS.opcode);
 }

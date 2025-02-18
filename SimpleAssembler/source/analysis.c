@@ -1,7 +1,7 @@
 #include "analysis.h"
 
 bool syntacticalAnalysis(FILE* file) {
-	// To be implimented by shlok.
+	// To be implimented by shlok and sambhav.
 	return true;
 }
 

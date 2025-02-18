@@ -3,7 +3,6 @@ section .text
     global mergeIEncoding
     global mergeSEncoding
     global mergeBEncoding
-    global mergeJEncoding
 
 mergeREncoding:
     mov eax, r9d    ; Load the [opcode] parameter (r9d) into the EAX register
@@ -27,7 +26,7 @@ mergeREncoding:
     mov ebx, edi    ; Load [f7] (edi) into EBX
     shl ebx, 0x19   ; shift it left by 25 bit
     add eax, ebx    ; and add to EAX
-ret
+ret                 ; return the encoded instruction from EAX
 
 mergeIEncoding:
     mov eax, r8d    ; Load the [opcode] parameter (r8d) into the EAX register
@@ -111,37 +110,6 @@ mergeBEncoding:
 
     mov ebx, edi    
     shl ebx, 0x1f
-    add eax, ebx
-ret
-
-mergeJEncoding:
-    sar edi, 0x01
-    mov eax, edx    ; Load opcode into [EAX]
-    
-    mov ebx, esi    ; Load rd to [RBX]
-    shl ebx, 0x07   ; shift left by 0x07
-    add eax, ebx    ; add rd at [11:7]
-
-    mov ebx, edi    ; Load imm into [RBX]
-    shl ebx, 0x16   ; truncate all except imm[10:1]
-    shr ebx, 0x01   ; posion it to isa requirement
-    shr edi, 0x0a   ; truncate imm[10:1]
-    add eax, ebx    ; add to bytecode representation
-
-    mov ebx, edi    ; pre-truncated part of edi
-    shl ebx, 0x1f   ; remove all except imm[11]
-    shr ebx, 0x0b   ; shift to its position
-    shr edi, 0x01   ; truncate imm[11]
-    add eax, ebx    ; add imm[11] to position
-
-    mov ebx, edi    ; load pre-truncated part of edi
-    shl ebx, 0x18   ; truncate imm[20]
-    shr ebx, 0x0c   ; positon wrt isa
-    shr edi, 0x08   ; truncate imm[19:12]
-    add eax, ebx    ; add imm[19:12] to position
-
-    mov ebx, edi    ; load imm[20]
-    shl ebx, 0x1f   ; position wrt isa
     add eax, ebx
 ret
 

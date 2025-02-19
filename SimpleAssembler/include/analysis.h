@@ -2,6 +2,9 @@
 #define ANALYSIS_H
 
 #include "pch.h"
+#include "commons.h"
+#include "encodings.h"
+
 /**
  * @brief structure to obtain and keep track of labels and instructions texts.
  * 

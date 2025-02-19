@@ -1,7 +1,19 @@
 #include "analysis.h"
 
-bool syntacticalAnalysis(Line arr[], unsigned int length){
-	// To be implimented by shlok and sambhav.
+bool syntacticalAnalysis(Line arr[], unsigned int length) {
+	// Checking for Label
+	for (int i = 0; i < length; i++) {
+		if (arr[i].lType == LABEL) {
+			for (int j = i + 1; j < length; j++) {
+				if ((arr[j].lType == LABEL) && (arr[j].content == arr[i].content)) {
+					return false;
+				}
+			}
+		}
+		else if (!isLineSyntacticallyCorrect(arr[i])) {
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -52,6 +64,159 @@ bool is_valid_label(const char* text) {
 }
 
 
+bool isLineSyntacticallyCorrect(Line line) {
+	
+	char* lineContent = line.content;
+	char words[10][10];
+	char delimiters[] = { ' ',',' };
+	string_splitter(lineContent, words, delimiters);
+	lineContent[strcspn(lineContent, "\n")] = '\0';
+	
+
+	Instruction instruction1 = instruction_encoding(words[0]);
+	const char* instructionType = instruction1.type;
+
+	if (strcmp(instructionType, "R") == 0) {
+		int commaCount = 0;
+		int termCount = 0;
+		int termCountStatus = 1;
+		for (int i = 0; i < strlen(line.content); i++) {
+			if (line.content[i] == ',')
+				commaCount++;
+			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
+				termCount++;
+				continue;
+			}
+			termCountStatus = 0;
+		}
+		bool s1, s2, s3;
+		s1 = (commaCount == 2) ? true : false;
+		s2 = (termCount == 4) ? true : false;
+		s3 = true;
+		for (int i = 0; line.content[i]; i++) {
+			if (!isalnum((unsigned char)line.content[i]) && line.content[i] != ',') {
+				s3 = false;
+				break;
+			}
+		}
+		return s1 && s2 && s3;
+	}
+
+	if (strcmp(instructionType, "S") == 0) {
+		int commaCount = 0;
+		int termCount = 0;
+		int termCountStatus = 1;
+		int openParen = 0, closeParen = 0;
+		for (int i = 0; i < strlen(line.content); i++) {
+			if (line.content[i] == ',')
+				commaCount++;
+			if (line.content[i] == '(')
+				openParen++;
+			if (line.content[i] == ')')
+				closeParen++;
+			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
+				termCount++;
+				continue;
+			}
+			termCountStatus = 0;
+		}
+		bool s1 = (commaCount == 1);
+		bool s2 = (termCount == 3);
+		bool s3 = (openParen == 1 && closeParen == 1);
+		bool s4 = true;
+		for (int i = 0; line.content[i]; i++) {
+			if (!isalnum((unsigned char)line.content[i]) && line.content[i] != ',' &&
+				line.content[i] != '(' && line.content[i] != ')' && line.content[i] != '-') {
+				s4 = false;
+				break;
+			}
+		}
+		return s1 && s2 && s3 && s4;
+	
+	}
+
+	if (strcmp(instructionType, "I") == 0) {
+		int commaCount = 0;
+		int termCount = 0;
+		int termCountStatus = 1;
+		for (int i = 0; i < strlen(line.content); i++) {
+			if (line.content[i] == ',')
+				commaCount++;
+			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
+				termCount++;
+				continue;
+			}
+			termCountStatus = 0;
+		}
+		bool s1 = (commaCount == 2);
+		bool s2 = (termCount == 4);
+		bool s3 = true;
+		for (int i = 0; line.content[i]; i++) {
+			if (!isalnum((unsigned char)line.content[i]) && line.content[i] != ',' && line.content[i] != '-') {
+				s3 = false;
+				break;
+			}
+		}
+		return s1 && s2 && s3;
+	}
+
+
+	if (strcmp(instructionType, "B") == 0) {
+		int commaCount = 0;
+		int termCount = 0;
+		int termCountStatus = 1;
+		for (int i = 0; i < strlen(line.content); i++) {
+			if (line.content[i] == ',')
+				commaCount++;
+			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
+				termCount++;
+				continue;
+			}
+			termCountStatus = 0;
+		}
+		bool s1 = (commaCount == 2);
+		bool s2 = (termCount == 4);
+		bool s3 = true;
+		for (int i = 0; line.content[i]; i++) {
+			char c = line.content[i];
+			if (!isalnum((unsigned char)c) && c != ',' && c != '_' && c != '-') {
+				s3 = false;
+				break;
+			}
+		}
+		return s1 && s2 && s3;
+	}
+
+	if (strcmp(instructionType, "J") == 0) {
+		int commaCount = 0;
+		int termCount = 0;
+		int termCountStatus = 1;
+		for (int i = 0; i < strlen(line.content); i++) {
+			if (line.content[i] == ',')
+				commaCount++;
+			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
+				termCount++;
+				continue;
+			}
+			termCountStatus = 0;
+		}
+		bool s1 = (commaCount == 1);
+		bool s2 = (termCount == 3);
+		bool s3 = true;
+		for (int i = 0; line.content[i]; i++) {
+			char c = line.content[i];
+			if (!isalnum((unsigned char)c) && c != ',' && c != '_' && c != '-') {
+				s3 = false;
+				break;
+			}
+		}
+		return s1 && s2 && s3;
+	}
+
+	
+}
+
+
 bool isLineLexicallyCorrect(Line line) {
 	char lineType = line.lType;
 	if (lineType == LABEL) {
@@ -61,10 +226,11 @@ bool isLineLexicallyCorrect(Line line) {
 		return true;
 	}
 
-	const char* lineContent = line.content;
+	char* lineContent = line.content;
 	char words[10][10];
 	char delimiters[] = {' ',','};
 	string_splitter(lineContent, words, delimiters);
+	lineContent[strcspn(lineContent, "\n")] = '\0';
 
 	if (!is_valid_instruction(words[0]))
 		return false;
@@ -90,6 +256,7 @@ bool isLineLexicallyCorrect(Line line) {
 		char delimiters2[] = { '(', ')'};
 		char words2[10][10];
 		string_splitter(words[2], words2, delimiters2);
+		words[2][strcspn(words[2], "\n")] = '\0';
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_immediate(words2[0], S);
 		bool s3 = is_valid_register(words2[1]);

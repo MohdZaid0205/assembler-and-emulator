@@ -2,19 +2,31 @@
 #define ANALYSIS_H
 
 #include "pch.h"
-
+/**
+ * @brief structure to obtain and keep track of labels and instructions texts.
+ * 
+ * This structure holds some essential values and properties related to lines in given assembly files.
+ * - `ltype`: enum that shows what type of instruction LABEL/TEXTS is stored on that line.
+ * - `lNo`: Line Number at which this instruction is defined at.
+ * - `aAd`: Absolute address of label, set to 0 if not a label.
+ * - `content`: whatever a line may contain.
+ */
 typedef struct Line{
     enum lType {
-        LABEL = 0b01,
-        TEXTS = 0b10,
+        LABEL = 0b01,   // signifies that this line is a label
+        TEXTS = 0b10,   // signifies that this line is a code/text line
     } lType;
 
-    unsigned int lNo;
-    const char* content;
+    unsigned int lNo;       // Line Number at which this instruction is defined at.
+    unsigned int aAd;       // Absolute address of label, set to 0 if not a label.
+    const char* content;    // whatever a line may contain.
 } Line;
 
 bool isLineLexicallyCorrect(Line line);
 bool isLineSyntacticallyCorrect(Line line);
+
+bool is_valid_label(const char* _lab);
+bool calculate_LrAd(const char* _lab);
 
 /**
 * @breif Checks the syntax of the assembly code.

@@ -2,13 +2,81 @@
 #include "encodings.h"
 
 #ifdef _WIN32
-    // impliment here
+    // Function to merge R-Type encoding
+    BYTECODE mergeREncoding(BYTE f7, BYTE rs2, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode) {
+        return ((f7 & 0x7F) << 25) |
+            ((rs2 & 0x1F) << 20) |
+            ((rs1 & 0x1F) << 15) |
+            ((f3 & 0x07) << 12) |
+            ((rd & 0x1F) << 7) |
+            (opcode & 0x7F);
+    }
+
+    // Function to merge I-Type encoding
+    BYTECODE mergeIEncoding(int imm, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode) {
+        return ((imm & 0xFFF) << 20) |
+            ((rs1 & 0x1F) << 15) |
+            ((f3 & 0x07) << 12) |
+            ((rd & 0x1F) << 7) |
+            (opcode & 0x7F);
+    }
+
+    // Function to merge S-Type encoding
+    BYTECODE mergeSEncoding(int imm, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode) {
+        BYTE imm_upper = (imm >> 5) & 0x7F;
+        BYTE imm_lower = imm & 0x1F;
+
+        return ((imm_upper & 0x7F) << 25) |
+            ((rs2 & 0x1F) << 20) |
+            ((rs1 & 0x1F) << 15) |
+            ((f3 & 0x07) << 12) |
+            ((imm_lower & 0x1F) << 7) |
+            (opcode & 0x7F);
+    }
+
+    // Function to merge B-Type encoding
+    BYTECODE mergeBEncoding(int imm, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode) {
+        BYTE imm_12 = (imm >> 12) & 0x1;
+        BYTE imm_10_5 = (imm >> 5) & 0x3F;
+        BYTE imm_4_1 = (imm >> 1) & 0xF;
+        BYTE imm_11 = (imm >> 11) & 0x1;
+
+        return ((imm_12 & 0x1) << 31) |
+            ((imm_10_5 & 0x3F) << 25) |
+            ((rs2 & 0x1F) << 20) |
+            ((rs1 & 0x1F) << 15) |
+            ((f3 & 0x07) << 12) |
+            ((imm_4_1 & 0xF) << 8) |
+            ((imm_11 & 0x1) << 7) |
+            (opcode & 0x7F);
+    }
+
+    // Function to merge J-Type encoding
+    BYTECODE mergeJEncoding(int imm, BYTE rd, BYTE opcode) {
+        BYTE imm_20 = (imm >> 20) & 0x1;
+        BYTE imm_10_1 = (imm >> 1) & 0x3FF;
+        BYTE imm_11 = (imm >> 11) & 0x1;
+        BYTE imm_19_12 = (imm >> 12) & 0xFF;
+
+        return ((imm_20 & 0x1) << 31) |
+            ((imm_10_1 & 0x3FF) << 21) |
+            ((imm_11 & 0x1) << 20) |
+            ((imm_19_12 & 0xFF) << 12) |
+            ((rd & 0x1F) << 7) |
+            (opcode & 0x7F);
+    }
 #else
-    extern BYTECODE mergeREncoding(BYTE f7, BYTE rs2, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
-    extern BYTECODE mergeIEncoding(int immidiate, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
-    extern BYTECODE mergeSEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
-    extern BYTECODE mergeBEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
-    extern BYTECODE mergeJEncoding(int immidiate, BYTE rd, BYTE opcode);
+    extern BYTECODE asm_mergeREncoding(BYTE f7, BYTE rs2, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
+    extern BYTECODE asm_mergeIEncoding(int immidiate, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
+    extern BYTECODE asm_mergeSEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
+    extern BYTECODE asm_mergeBEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
+    extern BYTECODE asm_mergeJEncoding(int immidiate, BYTE rd, BYTE opcode);
+
+    #define mergeREncoding asm_mergeREncoding
+    #define mergeIEncoding asm_mergeIEncoding
+    #define mergeSEncoding asm_mergeSEncoding
+    #define mergeBEncoding asm_mergeBEncoding
+    #define mergeJEncoding asm_mergeJEncoding
 #endif // _WIN32
 
 

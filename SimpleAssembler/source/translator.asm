@@ -1,11 +1,11 @@
 section .text
-    global mergeREncoding
-    global mergeIEncoding
-    global mergeSEncoding
-    global mergeBEncoding
-    global mergeJEncoding
+    global asm_mergeREncoding
+    global asm_mergeIEncoding
+    global asm_mergeSEncoding
+    global asm_mergeBEncoding
+    global asm_mergeJEncoding
 
-mergeREncoding:
+asm_mergeREncoding:
     mov eax, r9d    ; Load the [opcode] parameter (r9d) into the EAX register
 
     mov ebx, r8d    ; Load [rd] (r8d) into EBX
@@ -29,7 +29,7 @@ mergeREncoding:
     add eax, ebx    ; and add to EAX
 ret
 
-mergeIEncoding:
+asm_mergeIEncoding:
     mov eax, r8d    ; Load the [opcode] parameter (r8d) into the EAX register
 
     mov ebx, ecx    ; Load [rd] (ecx) into EBX
@@ -49,7 +49,7 @@ mergeIEncoding:
     add eax, ebx    ; add 12 bits imm to EAX
 ret
 
-mergeSEncoding:
+asm_mergeSEncoding:
     mov eax, r8d    ; Load the [opcode] parameter (r8d) into the EAX register
 
     mov ebx, edi    ; Load imm[4:0] into EBX
@@ -75,7 +75,7 @@ mergeSEncoding:
     add eax, ebx    ; and add to EAX
 ret
 
-mergeBEncoding:
+asm_mergeBEncoding:
     sar edi, 0x01
     mov eax, r8d    ; Load the [opcode] parameter (r8d) into the EAX register
 
@@ -114,7 +114,7 @@ mergeBEncoding:
     add eax, ebx
 ret
 
-mergeJEncoding:
+asm_mergeJEncoding:
     sar edi, 0x01
     mov eax, edx    ; Load opcode into [EAX]
     

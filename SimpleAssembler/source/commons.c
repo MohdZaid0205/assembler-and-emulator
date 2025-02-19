@@ -1,6 +1,6 @@
 #include "commons.h"
 
-void string_splitter(char input[], char words[10][10], char delimiters[]) {
+void string_splitter(const char* input, char words[10][10], char delimiters[]) {
 
     int wordsCount = 0;
     int wordIndex = 0;

@@ -11,6 +11,6 @@
  * @param words The array of words into which the string will be split.
  * @param delimiters The delimiters based on which the string will be split.
  */
-void string_splitter(char input[], char words[10][10], char delimiters[]);
+void string_splitter(const char* input, char words[10][10], char delimiters[]);
 
 #endif

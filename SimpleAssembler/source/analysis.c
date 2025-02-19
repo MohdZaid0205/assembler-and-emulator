@@ -63,7 +63,7 @@ bool isLineLexicallyCorrect(Line line) {
 
 
 	else if (lineType == TEXTS) {
-		char lineContent = line.content;
+		const char* lineContent = line.content;
 		char words[10][10];
 		char delimiters[] = {' ',','};
 		string_splitter(lineContent, words, delimiters);
@@ -72,7 +72,7 @@ bool isLineLexicallyCorrect(Line line) {
 			return false;
 		
 		Instruction instruction1 = instruction_encoding(words[0]);
-		char instructionType = instruction1.type;
+		const char* instructionType = instruction1.type;
 
 		if (strcmp(instructionType, "R") == 0) {
 			bool s1 = is_valid_register(words[1]);
@@ -114,7 +114,7 @@ bool isLineLexicallyCorrect(Line line) {
 			}
 		}
 
-		if (strcat(instructionType, "J") == 0) {
+		if (strcmp(instructionType, "J") == 0) {
 			bool s1 = is_valid_register(words[1]);
 			bool s2 = is_valid_immediate(words[2], J) || is_valid_label(words[2]);
 			if (s1 && s2 == false) {// To impliment which type of error is raised.

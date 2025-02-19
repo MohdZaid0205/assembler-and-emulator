@@ -1,14 +1,20 @@
 #include "analysis.h"
 
-bool syntacticalAnalysis(FILE* file) {
+bool syntacticalAnalysis(Line arr[], unsigned int length){
 	// To be implimented by shlok and sambhav.
 	return true;
 }
 
-bool lexicalAnalysis(FILE* file) {
-	// To be implimented by rishabh.
+
+bool lexicalAnalysis(Line arr[], unsigned int length) {
+	
+	for (int i = 0; i < length; i++) {
+		if (!isLineLexicallyCorrect(arr[i]))
+			return false;
+	}
 	return false;
 }
+
 
 bool is_valid_label(const char* text) {
 
@@ -44,6 +50,7 @@ bool is_valid_label(const char* text) {
 	}
 	return true;
 }
+
 
 bool isLineLexicallyCorrect(Line line) {
 	char lineType = line.lType;
@@ -114,7 +121,6 @@ bool isLineLexicallyCorrect(Line line) {
 				return false;
 			}
 		}
-
 		
 		return true;
 	}

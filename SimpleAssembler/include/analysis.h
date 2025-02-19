@@ -38,7 +38,7 @@ bool calculate_LrAd(const char* _lab);
 * @param file A pointer to the file containing the assembly code.
 * @return A boolean value indicating whether the syntax of the assembly code is correct.
 */
-bool syntacticalAnalysis(FILE* file);
+bool syntacticalAnalysis(Line arr[], unsigned int length);
 
 /**
 * @breif Checks the lexical correctness of the assembly code.
@@ -47,6 +47,6 @@ bool syntacticalAnalysis(FILE* file);
 * @param file A pointer to the file containing the assembly code.
 * @return A boolean value indicating whether the lexical correctness of the assembly code is correct.
 */
-bool lexicalAnalysis(FILE* file);
+bool lexicalAnalysis(Line arr[], unsigned int length);
 
 #endif

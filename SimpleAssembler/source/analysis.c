@@ -4,11 +4,8 @@ bool syntacticalAnalysis(Line arr[], unsigned int length) {
 	// Checking for Label
 	for (int i = 0; i < length; i++) {
 		if (arr[i].lType == LABEL) {
-			for (int j = i + 1; j < length; j++) {
-				if ((arr[j].lType == LABEL) && (arr[j].content == arr[i].content)) {
-					return false;
-				}
-			}
+			if (calculate_label_occurence(arr[i].content, arr, length) > 1)
+				return false;
 		}
 		else if (!isLineSyntacticallyCorrect(arr[i])) {
 			return false;
@@ -61,6 +58,22 @@ bool is_valid_label(const char* text) {
 	
 	}
 	return true;
+}
+
+int calculate_label_occurence(const char* _lab, Line arr[], int length) {
+	int occurence = 0;
+	for (int i = 0; i < length; i++){
+		if (arr[i].lType == LABEL && strcmp(arr[i].content, _lab) == 0)
+			occurence++;
+	}
+	return occurence;
+}
+
+int calculate_label_rAd(const char* _lab, unsigned int aAd, Line arr[], int length) {
+	for (int i = 0; i < length; i++) {
+		if (arr[i].lType == LABEL && strcmp(arr[i].content, _lab) == 0)
+			return arr[i].aAd - aAd;
+	}
 }
 
 

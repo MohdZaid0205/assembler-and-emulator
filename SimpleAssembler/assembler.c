@@ -59,18 +59,12 @@ int main(int argc, char** argv){
             _current.lNo = _rel_lines-1;
             _current.lType = TEXTS;
             _current.content = strdup(_source_file_line);
-            _current.aAd = 0;
+            _current.aAd = (_rel_lines - 1) * 4;
             _source_all_lines[_all_lines-1] = _current;
         }
         else {
             _all_lines += 2;
             _source_all_lines = realloc(_source_all_lines, (int)sizeof(Line)*_all_lines);
-            Line _current;
-            _current.lNo = _rel_lines-1;
-            _current.lType = TEXTS;
-            _current.content = strdup(colon_pos+1);
-            _current.aAd = 0;
-            _source_all_lines[_all_lines-1] = _current;
             Line _label;
             colon_pos[0] = '\0';
             _label.lNo = _rel_lines-1;
@@ -78,12 +72,18 @@ int main(int argc, char** argv){
             _label.content = strdup(_source_file_line);
             _label.aAd = (_rel_lines-1)*4;
             _source_all_lines[_all_lines-2] = _label;
+            Line _current;
+            _current.lNo = _rel_lines-1;
+            _current.lType = TEXTS;
+            _current.content = strdup(colon_pos+1);
+            _current.aAd = (_rel_lines - 1) * 4;
+            _source_all_lines[_all_lines-1] = _current;
         }
     }
     
     for (int i = 1; i < _all_lines; i++){
         Line line = _source_all_lines[i];
-         printf("%d %d %s\n", line.lNo, line.lType, line.content);
+        printf("%d %d %s\n", line.lNo, line.lType, line.content);
         bool a = isLineSyntacticallyCorrect(line);
         bool b = isLineLexicallyCorrect(line);
         printf("this line is %d %d\n", a, b);

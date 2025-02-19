@@ -1,7 +1,7 @@
 #include "assembler.h"
 
 
-BYTECODE Instruction_to_ByteCode(Line line) {
+BYTECODE Instruction_to_ByteCode(Line line, Line arr[], int length) {
     char* lineContent = (char*)line.content;
     char words[10][10];
     char delimiters[] = { ' ',',', '\0' };
@@ -21,16 +21,25 @@ BYTECODE Instruction_to_ByteCode(Line line) {
         char words2[10][10];
         words[2][strcspn(words[2], "\n")] = '\0';
         string_splitter(words[2], words2, delimiters2); 
-        return translateSType(words[0], words[1], words2[1], words2[0]);
+        return translateSType(words[0], words2[1], words[1], words2[0]);
 	}
 	if (strcmp(instructionType, "B") == 0) {
-		return translateBType(words[0], words[1], words[2], ...);// words[3] is the label value/ immediate
+        char* imm;
+        if (!is_valid_immediate(words[3], B) == 0)
+            imm = calculate_label_rAd(words[3], line.aAd, arr, length);
+		else
+			imm = words[3];
+		return translateBType(words[0], words[1], words[2], imm);// words[3] is the label value/ immediate
 	}
 	if (strcmp(instructionType, "J") == 0) {
-		return translateJType(words[0], ..., words[1]); // words[2] is the label value/ immediate
+        char* imm;
+        if (!is_valid_immediate(words[3], B) == 0)
+            imm = calculate_label_rAd(words[3], line.aAd, arr, length);
+        else
+            imm = words[3];
+		return translateJType(words[0], imm, words[1]); // words[2] is the label value/ immediate
 	}
 }
-
 
 
 int main(int argc, char** argv){
@@ -114,10 +123,21 @@ int main(int argc, char** argv){
         }
     }
     
-    syntacticalAnalysis(_source_all_lines + 1, _all_lines - 1);
-    lexicalAnalysis(_source_all_lines + 1, _all_lines - 1);
+    bool syn= syntacticalAnalysis(_source_all_lines + 1, _all_lines - 1);
+    bool lex= lexicalAnalysis(_source_all_lines + 1, _all_lines - 1);
 
+	FILE* OUTPUT = fopen(_output_file_path, "w");
+    for (int i = 1; i < _all_lines; i++){
+        BYTECODE generated = Instruction_to_ByteCode(_source_all_lines[i], _source_all_lines + 1, _all_lines - 1);
+		char binary[33];
+		intToBinaryString(generated, binary);
+		fprintf(OUTPUT, "%s\n", binary);
+    }
 
+     //   BYTECODE St = translateSType("sw", "s8", "s2", "38");
+     //   char binary[33];
+     //   intToBinaryString(St, binary);
+     //   printf("%s\n", binary);
 
     free(_source_all_lines);
     fclose(SOURCE);

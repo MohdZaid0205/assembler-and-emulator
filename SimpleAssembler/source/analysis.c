@@ -178,7 +178,7 @@ bool isLineSyntacticallyCorrect(Line line) {
 		bool s2 = (termCount == 4);
 		bool s3 = true;
 		for (int i = 0; lineContent[i]; i++) {
-			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-' && lineContent[i] != ' ') {
+			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-' && lineContent[i] != ' ' && lineContent[i] != '(' && lineContent[i] != ')') {
 				s3 = false;
 				break;
 			}
@@ -186,9 +186,9 @@ bool isLineSyntacticallyCorrect(Line line) {
 		bool s4 = (commaCount == 1);
 		bool s5 = (termCount == 3);
 
-		if (!((s1 && s2 && s3) || (s4 && s5 && s3 && (strcmp(words[0], "lw") == 0))));
+		if (((s1 && s2 && s3) || (s4 && s5 && s3)) == 0)
 			trace_sytx_error(line.lNo, line.content, "Syntax Error in I-Type Instruction");
-		return (s1 && s2 && s3)||(s4 && s5 && s3 && (strcmp(words[0],"lw")==0));
+		return (s1 && s2 && s3)||(s4 && s5 && s3);
 	}
 
 
@@ -272,9 +272,10 @@ bool isLineLexicallyCorrect(Line line) {
 	lineContent[strcspn(lineContent, "\n")] = '\0';
 	string_splitter(lineContent, words, delimiters);
 
-	if (!is_valid_instruction(words[0]))
+	if (!is_valid_instruction(words[0])) {
 		trace_name_error(line.lNo, line.content, "Instruction", "Instruction is not valid");
 		return false;
+	}
 		
 	Instruction instruction1 = instruction_encoding(words[0]);
 	const char* instructionType = instruction1.type;

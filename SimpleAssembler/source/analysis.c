@@ -66,9 +66,9 @@ bool is_valid_label(const char* text) {
 
 bool isLineSyntacticallyCorrect(Line line) {
 	
-	char* lineContent = line.content;
+	char* lineContent = (char*)line.content;
 	char words[10][10];
-	char delimiters[] = { ' ',',' };
+	char delimiters[] = { ' ',',', '\0' };
 	string_splitter(lineContent, words, delimiters);
 	lineContent[strcspn(lineContent, "\n")] = '\0';
 	
@@ -226,11 +226,11 @@ bool isLineLexicallyCorrect(Line line) {
 		return true;
 	}
 
-	char* lineContent = line.content;
+	char* lineContent = (char*)line.content;
 	char words[10][10];
-	char delimiters[] = {' ',','};
-	string_splitter(lineContent, words, delimiters);
+	char delimiters[] = { ' ',',', '\0' };
 	lineContent[strcspn(lineContent, "\n")] = '\0';
+	string_splitter(lineContent, words, delimiters);
 
 	if (!is_valid_instruction(words[0]))
 		return false;
@@ -253,10 +253,10 @@ bool isLineLexicallyCorrect(Line line) {
 	}
 
 	if (strcmp(instructionType, "S") == 0) {
-		char delimiters2[] = { '(', ')'};
+		char delimiters2[] = { '(', ')', '\0'};
 		char words2[10][10];
-		string_splitter(words[2], words2, delimiters2);
 		words[2][strcspn(words[2], "\n")] = '\0';
+		string_splitter(words[2], words2, delimiters2);
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_immediate(words2[0], S);
 		bool s3 = is_valid_register(words2[1]);

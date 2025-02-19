@@ -4,7 +4,7 @@ int main(int argc, char** argv){
     
     // assuming that assembly source file is passed to this assembler as first argument
     // assuming format for input argparse to be:
-    //      SimpleAssembler -file source.asm -out source.exe
+    //     SimpleAssembler -file source.asm -out source.exe
     const char* argparse_executable = argv[0];
     const char* argparse_file_flags = argv[1];
     const char* argparse_source_nme = argv[2];
@@ -79,9 +79,12 @@ int main(int argc, char** argv){
     
     for (int i = 1; i < _all_lines; i++){
         Line line = _source_all_lines[i];
-        printf("%d %d %s\n", line.lNo, line.lType, line.content);
+        // printf("%d %d %s\n", line.lNo, line.lType, line.content);
+        bool a = isLineSyntacticallyCorrect(line);
+        bool b = isLineLexicallyCorrect(line);
+        printf("this line is %d %d\n", a, b);
     }
-    
+
 
     free(_source_all_lines);
     fclose(SOURCE);

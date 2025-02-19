@@ -107,6 +107,11 @@ bool is_valid_instruction(const char* _ins){
 }
 
 bool is_valid_immediate(const char* _imm, enum Immediate _bound){
+    for (int i = 0; _imm[i] != NULL; i++) {
+        if ((48 <= _imm[i] && _imm[i] <= 57) || _imm[0] == 45)
+            continue;
+        return false;
+    }
     switch (_bound){
         case I:
             return -(1<<11) <= immediate_encoding(_imm) <= (1<<11) - 1;

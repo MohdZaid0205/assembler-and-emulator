@@ -109,13 +109,15 @@ bool isLineSyntacticallyCorrect(Line line) {
 		int termCount = 0;
 		int termCountStatus = 1;
 		int openParen = 0, closeParen = 0;
-		for (int i = 0; i < strlen(line.content); i++) {
-			if (line.content[i] == ',')
+		for (int i = 0; i < strlen(lineContent); i++) {
+			if (lineContent[i] == ',')
 				commaCount++;
-			if (line.content[i] == '(')
+			if (lineContent[i] == '(')
 				openParen++;
-			if (line.content[i] == ')')
+			if (lineContent[i] == ')')
 				closeParen++;
+		}
+		for (int i = 0; i < 10; i++) {
 			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
 				termCount++;
 				continue;
@@ -126,9 +128,9 @@ bool isLineSyntacticallyCorrect(Line line) {
 		bool s2 = (termCount == 3);
 		bool s3 = (openParen == 1 && closeParen == 1);
 		bool s4 = true;
-		for (int i = 0; line.content[i]; i++) {
-			if (!isalnum((unsigned char)line.content[i]) && line.content[i] != ',' &&
-				line.content[i] != '(' && line.content[i] != ')' && line.content[i] != '-') {
+		for (int i = 0; lineContent[i]; i++) {
+			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' &&
+				lineContent[i] != '(' && lineContent[i] != ')' && lineContent[i] != '-' && lineContent[i] != ' ') {
 				s4 = false;
 				break;
 			}
@@ -144,6 +146,8 @@ bool isLineSyntacticallyCorrect(Line line) {
 		for (int i = 0; i < strlen(lineContent); i++) {
 			if (lineContent[i] == ',')
 				commaCount++;
+		}
+		for (int i = 0; i < 10; i++) {
 			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
 				termCount++;
 				continue;
@@ -154,7 +158,7 @@ bool isLineSyntacticallyCorrect(Line line) {
 		bool s2 = (termCount == 4);
 		bool s3 = true;
 		for (int i = 0; lineContent[i]; i++) {
-			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-') {
+			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-' && lineContent[i] == ' ') {
 				s3 = false;
 				break;
 			}
@@ -170,6 +174,8 @@ bool isLineSyntacticallyCorrect(Line line) {
 		for (int i = 0; i < strlen(lineContent); i++) {
 			if (lineContent[i] == ',')
 				commaCount++;
+		}
+		for (int i = 0; i < 10; i++) {
 			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
 				termCount++;
 				continue;
@@ -181,7 +187,7 @@ bool isLineSyntacticallyCorrect(Line line) {
 		bool s3 = true;
 		for (int i = 0; lineContent[i]; i++) {
 			char c = lineContent[i];
-			if (!isalnum((unsigned char)c) && c != ',' && c != '_' && c != '-') {
+			if (!isalnum((unsigned char)c) && c != ',' && c != '_' && c != '-' && c != ' ') {
 				s3 = false;
 				break;
 			}
@@ -196,6 +202,8 @@ bool isLineSyntacticallyCorrect(Line line) {
 		for (int i = 0; i < strlen(lineContent); i++) {
 			if (lineContent[i] == ',')
 				commaCount++;
+		}
+		for (int i = 0; i < 10; i++) {
 			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
 				termCount++;
 				continue;
@@ -207,14 +215,13 @@ bool isLineSyntacticallyCorrect(Line line) {
 		bool s3 = true;
 		for (int i = 0; lineContent[i]; i++) {
 			char c = lineContent[i];
-			if (!isalnum((unsigned char)c) && c != ',' && c != '_' && c != '-') {
+			if (!isalnum((unsigned char)c) && c != ',' && c != '_' && c != '-' && c != ' ') {
 				s3 = false;
 				break;
 			}
 		}
 		return s1 && s2 && s3;
 	}
-
 	return false;
 }
 

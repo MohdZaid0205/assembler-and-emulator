@@ -24,7 +24,7 @@ bool lexicalAnalysis(Line arr[], unsigned int length) {
 		if (!isLineLexicallyCorrect(arr[i]))
 			return false;
 	}
-	return false;
+	return true;
 }
 
 
@@ -238,21 +238,30 @@ bool isLineLexicallyCorrect(Line line) {
 	Instruction instruction1 = instruction_encoding(words[0]);
 	const char* instructionType = instruction1.type;
 	
-	if (strcmp(instructionType, "R") == 0) {
+	if (strcmp(instructionType, "R") == 0) {  // Cross Checked This One , it is correct
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_register(words[2]);
 		bool s3 = is_valid_register(words[3]);
 		return s1 && s2 && s3;
 	}
 		
-	if (strcmp(instructionType, "I") == 0) {
+	if (strcmp(instructionType, "I") == 0) { // Corrected This One
+		char delimiters2[] = { '(', ')', '\0' };
+		char words2[10][10];
+		words[2][strcspn(words[2], "\n")] = '\0';
+		string_splitter(words[2], words2, delimiters2);
+		int len = 0;
+		for (int i = 0; words[i][0] != '\0'; i++) {
+			len++;
+		}
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_register(words[2]);
 		bool s3 = is_valid_immediate(words[3], I);
-		return s1 && s2 && s3;
+		bool s4 = (is_valid_immediate(words2[0], I) && is_valid_register(words2[1]));
+		return (s1 && s2 && s3 && (len == 4))||(s1 && s4 && (len == 3));
 	}
 
-	if (strcmp(instructionType, "S") == 0) {
+	if (strcmp(instructionType, "S") == 0) { // Cross Checked This One , it is correct
 		char delimiters2[] = { '(', ')', '\0'};
 		char words2[10][10];
 		words[2][strcspn(words[2], "\n")] = '\0';
@@ -264,17 +273,25 @@ bool isLineLexicallyCorrect(Line line) {
 
 	}
 
-	if (strcmp(instructionType, "B") == 0) {
+	if (strcmp(instructionType, "B") == 0) { // Cross Checked This One , it has error in bool s3 (label detcetion)
+		int len = 0;
+		for (int i = 0; words[i][0] != '\0'; i++) {
+			len++;
+		}
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_register(words[2]);
-		bool s3 = is_valid_immediate(words[3], B) || is_valid_label(words[3]);
-		return s1 && s2 && s3;
+		bool s3 = (is_valid_immediate(words[3], B) || is_valid_label(words[3])) ;
+		return s1 && s2 && s3 && (len == 4);
 	}
 
-	if (strcmp(instructionType, "J") == 0) {
+	if (strcmp(instructionType, "J") == 0) { // Cross Checked This One , it has error in bool s2 (label detcetion)
+		int len = 0;
+		for (int i = 0; words[i][0] != '\0'; i++) {
+			len++;
+		}
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_immediate(words[2], J) || is_valid_label(words[2]);
-		return s1 && s2;
+		return s1 && s2 && (len == 3);
 	}
 		
 	return true;

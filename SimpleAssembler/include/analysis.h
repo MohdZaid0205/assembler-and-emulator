@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "commons.h"
 #include "encodings.h"
+#include "errors.h"
 
 /**
  * @brief structure to obtain and keep track of labels and instructions texts.

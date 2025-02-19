@@ -5,12 +5,16 @@ int main(int argc, char** argv){
     // assuming that assembly source file is passed to this assembler as first argument
     // assuming format for input argparse to be:
     //     SimpleAssembler -file source.asm -out source.exe
-    const char* argparse_executable = argv[0];
-    const char* argparse_file_flags = argv[1];
-    const char* argparse_source_nme = argv[2];
-    const char* argparse_outs_flags = argv[3];
-    const char* argparse_output_nme = argv[4];
-    const char* argparse_paths_type = argv[5];
+    // const char* argparse_executable = argv[0];
+    // const char* argparse_file_flags = argv[1];
+    // const char* argparse_source_nme = argv[2];
+    // const char* argparse_outs_flags = argv[3];
+    // const char* argparse_output_nme = argv[4];
+    // const char* argparse_paths_type = argv[5];
+
+    const char* argparse_source_nme = "../temp/example.txt";
+    const char* argparse_output_nme = "../temp/output.txt";
+    const char* argparse_paths_type = "-rel";
 
     char _curr_working_directory[1024]; // for file read/write
     char* _cwd_status = get_cwd(_curr_working_directory, 1024);
@@ -79,7 +83,7 @@ int main(int argc, char** argv){
     
     for (int i = 1; i < _all_lines; i++){
         Line line = _source_all_lines[i];
-        // printf("%d %d %s\n", line.lNo, line.lType, line.content);
+         printf("%d %d %s\n", line.lNo, line.lType, line.content);
         bool a = isLineSyntacticallyCorrect(line);
         bool b = isLineLexicallyCorrect(line);
         printf("this line is %d %d\n", a, b);

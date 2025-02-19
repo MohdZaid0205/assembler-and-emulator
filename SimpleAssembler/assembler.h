@@ -11,9 +11,11 @@
 #ifdef _WIN32
     #include <direct.h>
     #define get_cwd _getcwd
+    #define PATH_SEPERATOR "\\"
 #else
     #include <unistd.h>
     #define get_cwd getcwd
+    #define PATH_SEPERATOR "/"
 #endif
 
 #endif

@@ -22,3 +22,9 @@ void trace_sytx_error(unsigned int lNo, const char* content, const char* message
     printf("\t\tproblems : \x1b[38;2;255;255;125m%s\x1b[0m\n", message);
     #define RAISED_SYTX_ERROR
 }
+
+void trace_cstm_error(const char* about, const char* message){
+    printf("%s\x1b[38;2;255;125;125m %s\x1b[0m\n", ERROR, about);
+    printf("\t\tproblems : \x1b[38;2;255;255;125m%s\x1b[0m\n", message);
+    #define RAISED_CSTM_ERROR
+}

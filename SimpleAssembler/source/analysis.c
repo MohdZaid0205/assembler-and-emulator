@@ -10,10 +10,47 @@ bool lexicalAnalysis(FILE* file) {
 	return false;
 }
 
+bool is_valid_label(const char* text) {
+
+	if (is_valid_register(text) || is_valid_instruction(text) || (48 <= (int)text[0] && (int)text[0] <= 57))
+		return false;
+
+	for (int i = 0; i < strlen(text); i++) {
+		switch (text[i]) {
+			// Digits (0-9)
+		case '0': case '1': case '2': case '3': case '4':
+		case '5': case '6': case '7': case '8': case '9':
+
+			// Uppercase letters (A-Z)
+		case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G':
+		case 'H': case 'I': case 'J': case 'K': case 'L': case 'M': case 'N':
+		case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'U':
+		case 'V': case 'W': case 'X': case 'Y': case 'Z':
+
+			// Lowercase letters (a-z)
+		case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g':
+		case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n':
+		case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u':
+		case 'v': case 'w': case 'x': case 'y': case 'z':
+
+			// Underscore (_)
+		case '_':
+			continue;  // Valid character
+
+		default:
+			return false;  // Invalid character
+		}
+	
+	}
+	return true;
+}
+
 bool isLineLexicallyCorrect(Line line) {
 	char lineType = line.lType;
 	if (lineType == LABEL) {
-		
+		if (!is_valid_label(line.content))
+			return false;
+
 		return true;
 	}
 

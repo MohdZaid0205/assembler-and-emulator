@@ -13,4 +13,13 @@
  */
 void string_splitter(const char* input, char words[10][10], char delimiters[]);
 
+/**
+* @breif Converts an integer to a binary string.
+ *
+ * This function converts an integer to a binary string.
+ * @param num The integer to be converted.
+ * @return The binary string.
+ */
+void intToBinaryString(int num, char* str);
+
 #endif

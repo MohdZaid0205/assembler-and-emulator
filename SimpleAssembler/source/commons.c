@@ -29,3 +29,12 @@ void string_splitter(const char* input, char words[10][10], char delimiters[]) {
 
     words[wordsCount][0] = '\0';
 }
+
+void intToBinaryString(int num, char* str) {
+    str[32] = '\0';
+
+    for (int i = 32 - 1; i >= 0; i--) {
+        str[i] = (num & 1) ? '1' : '0';
+        num >>= 1;
+    }
+}

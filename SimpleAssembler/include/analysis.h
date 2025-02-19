@@ -30,7 +30,7 @@ bool isLineSyntacticallyCorrect(Line line);
 
 bool is_valid_label(const char* _lab);
 int calculate_label_occurence(const char* _lab, Line arr[], int length);
-int calculate_label_rAd(const char* _lab, unsigned int aAd, Line arr[], int length);
+const char * calculate_label_rAd(const char* _lab, unsigned int aAd, Line arr[], int length);
 
 /**
 * @breif Checks the syntax of the assembly code.

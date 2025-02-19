@@ -81,13 +81,9 @@ int main(int argc, char** argv){
         }
     }
     
-    for (int i = 1; i < _all_lines; i++){
-        Line line = _source_all_lines[i];
-        printf("%d %d %s\n", line.lNo, line.lType, line.content);
-        bool a = isLineSyntacticallyCorrect(line);
-        bool b = isLineLexicallyCorrect(line);
-        printf("this line is %d %d\n", a, b);
-    }
+    syntacticalAnalysis(_source_all_lines + 1, _all_lines - 1);
+    lexicalAnalysis(_source_all_lines + 1, _all_lines - 1);
+
 
 
     free(_source_all_lines);

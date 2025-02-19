@@ -3,6 +3,19 @@
 
 #include "pch.h"
 
+typedef struct Line{
+    enum lType {
+        LABEL = 0b01,
+        TEXTS = 0b10,
+    } lType;
+
+    unsigned int lNo;
+    const char* content;
+} Line;
+
+bool isLineLexicallyCorrect(Line line);
+bool isLineSyntacticallyCorrect(Line line);
+
 /**
 * @breif Checks the syntax of the assembly code.
 * 

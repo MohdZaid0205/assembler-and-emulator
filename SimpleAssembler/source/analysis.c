@@ -308,7 +308,7 @@ bool isLineLexicallyCorrect(Line line) {
 		bool s2 = (termCount == 4);
 		bool s3 = true;
 		for (int i = 0; lineContent[i]; i++) {
-			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-' && lineContent[i] != ' ') {
+			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-' && lineContent[i] != ' ' && lineContent[i] != '(' && lineContent[i] != ')') {
 				s3 = false;
 				break;
 			}
@@ -355,7 +355,7 @@ bool isLineLexicallyCorrect(Line line) {
 		}
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_immediate(words[2], J) || is_valid_label(words[2]);
-		if (s1 && s2 && (len == 3))
+		if (!(s1 && s2 && (len == 3)))
 			trace_name_error(line.lNo, line.content, "Register/Immediate/Label", "Either Register or Immediate or Label is not valid");
 		return s1 && s2 && (len == 3);
 	}

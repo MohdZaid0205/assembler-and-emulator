@@ -14,6 +14,13 @@ BYTECODE Instruction_to_ByteCode(Line line, Line arr[], int length) {
         return translateRType(words[0], words[2], words[3], words[1]);
     }
 	if (strcmp(instructionType, "I") == 0) {
+        if (strcmp(words[0], "lw") == 0) {
+            char delimiters2[] = { '(', ')', '\0' };
+            char words2[10][10];
+            words[2][strcspn(words[2], "\n")] = '\0';
+            string_splitter(words[2], words2, delimiters2);
+			return translateIType(words[0], words2[1], words2[0], words[1]);
+        }
 		return translateIType(words[0], words[2], words[3], words[1]);
 	}
 	if (strcmp(instructionType, "S") == 0) {
@@ -25,7 +32,7 @@ BYTECODE Instruction_to_ByteCode(Line line, Line arr[], int length) {
 	}
 	if (strcmp(instructionType, "B") == 0) {
         char* imm;
-        if (!is_valid_immediate(words[3], B) == 0)
+        if (!is_valid_immediate(words[3], B))
             imm = calculate_label_rAd(words[3], line.aAd, arr, length);
 		else
 			imm = words[3];
@@ -33,10 +40,12 @@ BYTECODE Instruction_to_ByteCode(Line line, Line arr[], int length) {
 	}
 	if (strcmp(instructionType, "J") == 0) {
         char* imm;
-        if (!is_valid_immediate(words[2], J) == 0)
+        if (!is_valid_immediate(words[2], J)) {
             imm = calculate_label_rAd(words[2], line.aAd, arr, length);
-        else
+        }
+        else {
             imm = words[2];
+        }
 		return translateJType(words[0], imm, words[1]); // words[2] is the label value/ immediate
 	}
 }
@@ -47,16 +56,16 @@ int main(int argc, char** argv){
     // assuming that assembly source file is passed to this assembler as first argument
     // assuming format for input argparse to be:
     //     SimpleAssembler -file source.asm -out source.exe
-    // const char* argparse_executable = argv[0];
-    // const char* argparse_file_flags = argv[1];
-    // const char* argparse_source_nme = argv[2];
-    // const char* argparse_outs_flags = argv[3];
-    // const char* argparse_output_nme = argv[4];
-    // const char* argparse_paths_type = argv[5];
+     const char* argparse_executable = argv[0];
+     const char* argparse_file_flags = argv[1];
+     const char* argparse_source_nme = argv[2];
+     const char* argparse_outs_flags = argv[3];
+     const char* argparse_output_nme = argv[4];
+     const char* argparse_paths_type = argv[5];
 
-    const char* argparse_source_nme = "../temp/example.txt";
-    const char* argparse_output_nme = "../temp/output.txt";
-    const char* argparse_paths_type = "-rel";
+    //const char* argparse_source_nme = "../temp/example.txt";
+    //const char* argparse_output_nme = "../temp/output.txt";
+    //const char* argparse_paths_type = "-rel";
 
     char _curr_working_directory[1024]; // for file read/write
     char* _cwd_status = get_cwd(_curr_working_directory, 1024);

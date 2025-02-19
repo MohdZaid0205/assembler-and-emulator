@@ -33,10 +33,10 @@ BYTECODE Instruction_to_ByteCode(Line line, Line arr[], int length) {
 	}
 	if (strcmp(instructionType, "J") == 0) {
         char* imm;
-        if (!is_valid_immediate(words[3], B) == 0)
-            imm = calculate_label_rAd(words[3], line.aAd, arr, length);
+        if (!is_valid_immediate(words[2], J) == 0)
+            imm = calculate_label_rAd(words[2], line.aAd, arr, length);
         else
-            imm = words[3];
+            imm = words[2];
 		return translateJType(words[0], imm, words[1]); // words[2] is the label value/ immediate
 	}
 }
@@ -126,12 +126,15 @@ int main(int argc, char** argv){
     bool syn= syntacticalAnalysis(_source_all_lines + 1, _all_lines - 1);
     bool lex= lexicalAnalysis(_source_all_lines + 1, _all_lines - 1);
 
-	FILE* OUTPUT = fopen(_output_file_path, "w");
-    for (int i = 1; i < _all_lines; i++){
-        BYTECODE generated = Instruction_to_ByteCode(_source_all_lines[i], _source_all_lines + 1, _all_lines - 1);
-		char binary[33];
-		intToBinaryString(generated, binary);
-		fprintf(OUTPUT, "%s\n", binary);
+    if (syn && lex)
+    {
+	    FILE* OUTPUT = fopen(_output_file_path, "w");
+        for (int i = 1; i < _all_lines; i++){
+            BYTECODE generated = Instruction_to_ByteCode(_source_all_lines[i], _source_all_lines + 1, _all_lines - 1);
+		    char binary[33];
+		    intToBinaryString(generated, binary);
+		    fprintf(OUTPUT, "%s\n", binary);
+        }
     }
 
      //   BYTECODE St = translateSType("sw", "s8", "s2", "38");

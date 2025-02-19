@@ -272,9 +272,10 @@ bool isLineLexicallyCorrect(Line line) {
 	lineContent[strcspn(lineContent, "\n")] = '\0';
 	string_splitter(lineContent, words, delimiters);
 
-	if (!is_valid_instruction(words[0]))
+	if (!is_valid_instruction(words[0])) {
 		trace_name_error(line.lNo, line.content, "Instruction", "Instruction is not valid");
 		return false;
+	}
 		
 	Instruction instruction1 = instruction_encoding(words[0]);
 	const char* instructionType = instruction1.type;
@@ -289,21 +290,35 @@ bool isLineLexicallyCorrect(Line line) {
 	}
 		
 	if (strcmp(instructionType, "I") == 0) {
-		char delimiters2[] = { '(', ')', '\0' };
-		char words2[10][10];
-		words[2][strcspn(words[2], "\n")] = '\0';
-		string_splitter(words[2], words2, delimiters2);
-		int len = 0;
-		for (int i = 0; words[i][0] != '\0'; i++) {
-			len++;
+		int commaCount = 0;
+		int termCount = 0;
+		int termCountStatus = 1;
+		for (int i = 0; i < strlen(lineContent); i++) {
+			if (lineContent[i] == ',')
+				commaCount++;
 		}
-		bool s1 = is_valid_register(words[1]);
-		bool s2 = is_valid_register(words[2]);
-		bool s3 = is_valid_immediate(words[3], I);
-		bool s4 = (is_valid_immediate(words2[0], I) && is_valid_register(words2[1]));
-		if (!((s1 && s2 && s3 && (len == 4)) || (s1 && s4 && (len == 3))))
-			trace_name_error(line.lNo, line.content, "Register/Immediate", "Either Register or Immediate is not valid");
-		return (s1 && s2 && s3 && (len == 4))||(s1 && s4 && (len == 3));
+		for (int i = 0; i < 10; i++) {
+			if ((words[i][0] != '\0') && (termCountStatus == 1)) {
+				termCount++;
+				continue;
+			}
+			termCountStatus = 0;
+		}
+		bool s1 = (commaCount == 2);
+		bool s2 = (termCount == 4);
+		bool s3 = true;
+		for (int i = 0; lineContent[i]; i++) {
+			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-' && lineContent[i] != ' ') {
+				s3 = false;
+				break;
+			}
+		}
+		bool s4 = (commaCount == 1);
+		bool s5 = (termCount == 3);
+
+		if (((s1 && s2 && s3) || (s4 && s5 && s3)) == 0)
+			trace_sytx_error(line.lNo, line.content, "Syntax Error in I-Type Instruction");
+		return (s1 && s2 && s3) || (s4 && s5 && s3);
 	}
 
 	if (strcmp(instructionType, "S") == 0) {

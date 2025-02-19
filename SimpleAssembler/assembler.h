@@ -9,7 +9,7 @@
 #include "errors.h"
 #include "translator.h"
 
-BYTECODE Instruction_to_ByteCode(Line line);
+BYTECODE Instruction_to_ByteCode(Line line, Line arr[], int length);
 
 #ifdef _WIN32
     #include <direct.h>

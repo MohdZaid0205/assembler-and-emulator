@@ -1,28 +1,28 @@
 #include "analysis.h"
 
 bool syntacticalAnalysis(Line arr[], unsigned int length) {
-	// Checking for Label
+	bool status = true;
 	for (int i = 0; i < length; i++) {
 		if (arr[i].lType == LABEL) {
 			if (calculate_label_occurence(arr[i].content, arr, length) > 1)
 				trace_sytx_error(arr[i].lNo, arr[i].content, "Label is defined more than once");
-				return false;
+				status = false;
 		}
 		else if (!isLineSyntacticallyCorrect(arr[i])) {
-			return false;
+			status = false;
 		}
 	}
-	return true;
+	return status;
 }
 
 
 bool lexicalAnalysis(Line arr[], unsigned int length) {
-	
+	bool status = true;
 	for (int i = 0; i < length; i++) {
 		if (!isLineLexicallyCorrect(arr[i]))
-			return false;
+			status = false;
 	}
-	return true;
+	return status;
 }
 
 
@@ -183,9 +183,12 @@ bool isLineSyntacticallyCorrect(Line line) {
 				break;
 			}
 		}
-		if ((s1 && s2 && s3) == 0)
+		bool s4 = (commaCount == 1);
+		bool s5 = (termCount == 3);
+
+		if (!((s1 && s2 && s3) || (s4 && s5 && s3 && (strcmp(words[0], "lw") == 0))));
 			trace_sytx_error(line.lNo, line.content, "Syntax Error in I-Type Instruction");
-		return s1 && s2 && s3;
+		return (s1 && s2 && s3)||(s4 && s5 && s3 && (strcmp(words[0],"lw")==0));
 	}
 
 
@@ -276,7 +279,7 @@ bool isLineLexicallyCorrect(Line line) {
 	Instruction instruction1 = instruction_encoding(words[0]);
 	const char* instructionType = instruction1.type;
 	
-	if (strcmp(instructionType, "R") == 0) {  // Cross Checked This One , it is correct
+	if (strcmp(instructionType, "R") == 0) {
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_register(words[2]);
 		bool s3 = is_valid_register(words[3]);
@@ -285,7 +288,7 @@ bool isLineLexicallyCorrect(Line line) {
 		return s1 && s2 && s3;
 	}
 		
-	if (strcmp(instructionType, "I") == 0) { // Corrected This One
+	if (strcmp(instructionType, "I") == 0) {
 		char delimiters2[] = { '(', ')', '\0' };
 		char words2[10][10];
 		words[2][strcspn(words[2], "\n")] = '\0';
@@ -303,7 +306,7 @@ bool isLineLexicallyCorrect(Line line) {
 		return (s1 && s2 && s3 && (len == 4))||(s1 && s4 && (len == 3));
 	}
 
-	if (strcmp(instructionType, "S") == 0) { // Cross Checked This One , it is correct
+	if (strcmp(instructionType, "S") == 0) {
 		char delimiters2[] = { '(', ')', '\0'};
 		char words2[10][10];
 		words[2][strcspn(words[2], "\n")] = '\0';
@@ -317,7 +320,7 @@ bool isLineLexicallyCorrect(Line line) {
 
 	}
 
-	if (strcmp(instructionType, "B") == 0) { // Cross Checked This One , it has error in bool s3 (label detcetion)
+	if (strcmp(instructionType, "B") == 0) {
 		int len = 0;
 		for (int i = 0; words[i][0] != '\0'; i++) {
 			len++;
@@ -330,7 +333,7 @@ bool isLineLexicallyCorrect(Line line) {
 		return s1 && s2 && s3 && (len == 4);
 	}
 
-	if (strcmp(instructionType, "J") == 0) { // Cross Checked This One , it has error in bool s2 (label detcetion)
+	if (strcmp(instructionType, "J") == 0) {
 		int len = 0;
 		for (int i = 0; words[i][0] != '\0'; i++) {
 			len++;

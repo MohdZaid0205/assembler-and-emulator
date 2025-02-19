@@ -1,5 +1,38 @@
 #include "assembler.h"
 
+
+BYTECODE Instruction_to_ByteCode(Line line) {
+    char* lineContent = (char*)line.content;
+    char words[10][10];
+    char delimiters[] = { ' ',',', '\0' };
+    lineContent[strcspn(lineContent, "\n")] = '\0';
+    string_splitter(lineContent, words, delimiters);
+    Instruction instruction1 = instruction_encoding(words[0]);
+    const char* instructionType = instruction1.type;
+    
+    if (strcmp(instructionType, "R") == 0) {
+        return translateRType(words[0], words[2], words[3], words[1]);
+    }
+	if (strcmp(instructionType, "I") == 0) {
+		return translateIType(words[0], words[2], words[3], words[1]);
+	}
+	if (strcmp(instructionType, "S") == 0) {
+        char delimiters2[] = { '(', ')', '\0' };
+        char words2[10][10];
+        words[2][strcspn(words[2], "\n")] = '\0';
+        string_splitter(words[2], words2, delimiters2); 
+        return translateSType(words[0], words[1], words2[1], words2[0]);
+	}
+	if (strcmp(instructionType, "B") == 0) {
+		return translateBType(words[0], words[1], words[2], ...);// words[3] is the label value/ immediate
+	}
+	if (strcmp(instructionType, "J") == 0) {
+		return translateJType(words[0], ..., words[1]); // words[2] is the label value/ immediate
+	}
+}
+
+
+
 int main(int argc, char** argv){
     
     // assuming that assembly source file is passed to this assembler as first argument

@@ -1,12 +1,15 @@
 #ifndef ASSEMBLER_H
 #define ASSEMBLER_H
 
+
 #include "pch.h"
 #include "analysis.h"
 #include "commons.h"
 #include "configs.h"
 #include "errors.h"
 #include "translator.h"
+
+BYTECODE Instruction_to_ByteCode(Line line);
 
 #ifdef _WIN32
     #include <direct.h>

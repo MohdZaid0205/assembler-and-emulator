@@ -69,8 +69,8 @@ bool isLineSyntacticallyCorrect(Line line) {
 	char* lineContent = (char*)line.content;
 	char words[10][10];
 	char delimiters[] = { ' ',',', '\0' };
-	string_splitter(lineContent, words, delimiters);
 	lineContent[strcspn(lineContent, "\n")] = '\0';
+	string_splitter(lineContent, words, delimiters);
 	
 
 	Instruction instruction1 = instruction_encoding(words[0]);

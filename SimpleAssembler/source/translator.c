@@ -1,11 +1,16 @@
 #include "translator.h"
 #include "encodings.h"
 
-extern BYTECODE mergeREncoding(BYTE f7, BYTE rs2, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
-extern BYTECODE mergeIEncoding(int immidiate, BYTE rs1, BYTE f3,  BYTE rd, BYTE opcode);
-extern BYTECODE mergeSEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
-extern BYTECODE mergeBEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
-extern BYTECODE mergeJEncoding(int immidiate, BYTE rd , BYTE opcode);
+#ifdef _WIN32
+    // impliment here
+#else
+    extern BYTECODE mergeREncoding(BYTE f7, BYTE rs2, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
+    extern BYTECODE mergeIEncoding(int immidiate, BYTE rs1, BYTE f3, BYTE rd, BYTE opcode);
+    extern BYTECODE mergeSEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
+    extern BYTECODE mergeBEncoding(int immidiate, BYTE rs2, BYTE rs1, BYTE f3, BYTE opcode);
+    extern BYTECODE mergeJEncoding(int immidiate, BYTE rd, BYTE opcode);
+#endif // _WIN32
+
 
 BYTECODE translateRType(const char* instruction, const char* rs1, const char* rs2, const char* rd ){
     Instruction encodedINS = instruction_encoding(instruction);

@@ -158,7 +158,7 @@ bool isLineSyntacticallyCorrect(Line line) {
 		bool s2 = (termCount == 4);
 		bool s3 = true;
 		for (int i = 0; lineContent[i]; i++) {
-			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-' && lineContent[i] == ' ') {
+			if (!isalnum((unsigned char)lineContent[i]) && lineContent[i] != ',' && lineContent[i] != '-' && lineContent[i] != ' ') {
 				s3 = false;
 				break;
 			}

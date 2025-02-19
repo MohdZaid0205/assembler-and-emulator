@@ -5,6 +5,7 @@ bool syntacticalAnalysis(Line arr[], unsigned int length) {
 	for (int i = 0; i < length; i++) {
 		if (arr[i].lType == LABEL) {
 			if (calculate_label_occurence(arr[i].content, arr, length) > 1)
+				trace_sytx_error(arr[i].lNo, arr[i].content, "Label is defined more than once");
 				return false;
 		}
 		else if (!isLineSyntacticallyCorrect(arr[i])) {
@@ -114,6 +115,8 @@ bool isLineSyntacticallyCorrect(Line line) {
 				break;
 			}
 		}
+		if ((s1 && s2 && s3) == 0)
+			trace_sytx_error(line.lNo, line.content, "Syntax Error in R-Type Instruction");
 		return s1 && s2 && s3;
 	}
 
@@ -148,6 +151,8 @@ bool isLineSyntacticallyCorrect(Line line) {
 				break;
 			}
 		}
+		if ((s1 && s2 && s3 && s4) == 0)
+			trace_sytx_error(line.lNo, line.content, "Syntax Error in S-Type Instruction");
 		return s1 && s2 && s3 && s4;
 	
 	}
@@ -176,6 +181,8 @@ bool isLineSyntacticallyCorrect(Line line) {
 				break;
 			}
 		}
+		if ((s1 && s2 && s3) == 0)
+			trace_sytx_error(line.lNo, line.content, "Syntax Error in I-Type Instruction");
 		return s1 && s2 && s3;
 	}
 
@@ -205,6 +212,8 @@ bool isLineSyntacticallyCorrect(Line line) {
 				break;
 			}
 		}
+		if ((s1 && s2 && s3) == 0)
+			trace_sytx_error(line.lNo, line.content, "Syntax Error in B-Type Instruction");
 		return s1 && s2 && s3;
 	}
 
@@ -233,8 +242,11 @@ bool isLineSyntacticallyCorrect(Line line) {
 				break;
 			}
 		}
+		if ((s1 && s2 && s3) == 0)
+			trace_sytx_error(line.lNo, line.content, "Syntax Error in J-Type Instruction");
 		return s1 && s2 && s3;
 	}
+	trace_cstm_error("Instruction Type Error", "Instruction Type Not Found");
 	return false;
 }
 
@@ -243,6 +255,7 @@ bool isLineLexicallyCorrect(Line line) {
 	char lineType = line.lType;
 	if (lineType == LABEL) {
 		if (!is_valid_label(line.content))
+			trace_name_error(line.lNo, line.content, "Label", "Label is not valid");
 			return false;
 
 		return true;
@@ -255,6 +268,7 @@ bool isLineLexicallyCorrect(Line line) {
 	string_splitter(lineContent, words, delimiters);
 
 	if (!is_valid_instruction(words[0]))
+		trace_name_error(line.lNo, line.content, "Instruction", "Instruction is not valid");
 		return false;
 		
 	Instruction instruction1 = instruction_encoding(words[0]);
@@ -264,6 +278,8 @@ bool isLineLexicallyCorrect(Line line) {
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_register(words[2]);
 		bool s3 = is_valid_register(words[3]);
+		if (!(s1 && s2 && s3))
+			trace_name_error(line.lNo, line.content, "Register", "Register is not valid");
 		return s1 && s2 && s3;
 	}
 		
@@ -280,6 +296,8 @@ bool isLineLexicallyCorrect(Line line) {
 		bool s2 = is_valid_register(words[2]);
 		bool s3 = is_valid_immediate(words[3], I);
 		bool s4 = (is_valid_immediate(words2[0], I) && is_valid_register(words2[1]));
+		if (!((s1 && s2 && s3 && (len == 4)) || (s1 && s4 && (len == 3))))
+			trace_name_error(line.lNo, line.content, "Register/Immediate", "Either Register or Immediate is not valid");
 		return (s1 && s2 && s3 && (len == 4))||(s1 && s4 && (len == 3));
 	}
 
@@ -291,6 +309,8 @@ bool isLineLexicallyCorrect(Line line) {
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_immediate(words2[0], S);
 		bool s3 = is_valid_register(words2[1]);
+		if (!(s1 && s2 && s3))
+			trace_name_error(line.lNo, line.content, "Register/Immediate", "Either Register or Immediate is not valid");
 		return s1 && s2 && s3;
 
 	}
@@ -303,6 +323,8 @@ bool isLineLexicallyCorrect(Line line) {
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_register(words[2]);
 		bool s3 = (is_valid_immediate(words[3], B) || is_valid_label(words[3])) ;
+		if (!(s1 && s2 && s3 && (len == 4)))
+			trace_name_error(line.lNo, line.content, "Register/Immediate/Label", "Either Register or Immediate or Label is not valid");
 		return s1 && s2 && s3 && (len == 4);
 	}
 
@@ -313,10 +335,9 @@ bool isLineLexicallyCorrect(Line line) {
 		}
 		bool s1 = is_valid_register(words[1]);
 		bool s2 = is_valid_immediate(words[2], J) || is_valid_label(words[2]);
+		if (s1 && s2 && (len == 3))
+			trace_name_error(line.lNo, line.content, "Register/Immediate/Label", "Either Register or Immediate or Label is not valid");
 		return s1 && s2 && (len == 3);
 	}
-		
 	return true;
-
-
 }

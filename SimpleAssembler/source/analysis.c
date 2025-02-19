@@ -1,28 +1,28 @@
 #include "analysis.h"
 
 bool syntacticalAnalysis(Line arr[], unsigned int length) {
-	// Checking for Label
+	bool status = true;
 	for (int i = 0; i < length; i++) {
 		if (arr[i].lType == LABEL) {
 			if (calculate_label_occurence(arr[i].content, arr, length) > 1)
 				trace_sytx_error(arr[i].lNo, arr[i].content, "Label is defined more than once");
-				return false;
+				status = false;
 		}
 		else if (!isLineSyntacticallyCorrect(arr[i])) {
-			return false;
+			status = false;
 		}
 	}
-	return true;
+	return status;
 }
 
 
 bool lexicalAnalysis(Line arr[], unsigned int length) {
-	
+	bool status = true;
 	for (int i = 0; i < length; i++) {
 		if (!isLineLexicallyCorrect(arr[i]))
-			return false;
+			status = false;
 	}
-	return true;
+	return status;
 }
 
 
@@ -183,9 +183,12 @@ bool isLineSyntacticallyCorrect(Line line) {
 				break;
 			}
 		}
-		if ((s1 && s2 && s3) == 0)
+		bool s4 = (commaCount == 1);
+		bool s5 = (termCount == 3);
+
+		if (!((s1 && s2 && s3) || (s4 && s5 && s3 && (strcmp(words[0], "lw") == 0))));
 			trace_sytx_error(line.lNo, line.content, "Syntax Error in I-Type Instruction");
-		return s1 && s2 && s3;
+		return (s1 && s2 && s3)||(s4 && s5 && s3 && (strcmp(words[0],"lw")==0));
 	}
 
 

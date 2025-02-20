@@ -11,6 +11,38 @@
 
 Repository for Computer Organization, Winter 2025 semester, assignment at IIITD.
 
+## Usage
+
+In order to use this project to assemble code please follow the following instructions.
+
+### installing requirements
+
+- nasm assembler.
+- cmake build system.
+- gcc/msvc compiler.
+
+### build project and compile source code
+
+make the project files and build using build system
+
+```bash
+cmake -S . -B build
+cd build
+make
+```
+
+this should compile source code into `SimpleAssembler.exe`
+
+### use assembler
+
+to use this assembler write commond in specified manner
+
+```bash
+SimpleAssembler -file source.asm -out source.exe -rel
+```
+
+`-rel` flag can be changed with `-abs` to select between relative and absolute path.
+
 ## Contributors
 
 - [Mohd Zaid](https://github.com/MohdZaid0205)

@@ -5,6 +5,7 @@
 
 # ignore test suite provided by project evaluators
 [Aa]utomatedTesting
+[Tt]emp
 
 # User-specific files
 *.rsuser

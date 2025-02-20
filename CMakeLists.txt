@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.3)
+cmake_minimum_required(VERSION 3.16.3)
 
 set(PROJ_NAME "Assembly_and_Emulator"   ) # TODO: maybe be creatinve with name for this project.
 set(PROJ_LANG LANGUAGES ASM_NASM C CXX  ) # ASM and C to be used primarily and CXX+CUDA for parallel processing

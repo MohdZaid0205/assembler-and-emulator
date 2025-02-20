@@ -30,23 +30,29 @@ BYTECODE Instruction_to_ByteCode(Line line, Line arr[], int length) {
         string_splitter(words[2], words2, delimiters2); 
         return translateSType(words[0], words2[1], words[1], words2[0]);
 	}
-	if (strcmp(instructionType, "B") == 0) {
+    if (strcmp(instructionType, "B") == 0) {
         char* imm;
-        if (!is_valid_immediate(words[3], B))
-            imm = calculate_label_rAd(words[3], line.aAd, arr, length);
-		else
-			imm = words[3];
-		return translateBType(words[0], words[1], words[2], imm);// words[3] is the label value/ immediate
+        int tmp;
+        if (!is_valid_immediate(words[3], B)) {
+            tmp = calculate_label_rAd(words[3], line.aAd, arr, length);
+        }
+        else {
+            imm = words[3];
+			tmp = atoi(imm);
+        }
+		return translateBType(words[0], words[1], words[2], tmp);// words[3] is the label value/ immediate
 	}
 	if (strcmp(instructionType, "J") == 0) {
         char* imm;
+        int tmp;
         if (!is_valid_immediate(words[2], J)) {
-            imm = calculate_label_rAd(words[2], line.aAd, arr, length);
+            tmp = calculate_label_rAd(words[2], line.aAd, arr, length);
         }
         else {
             imm = words[2];
+            tmp = atoi(imm);
         }
-		return translateJType(words[0], imm, words[1]); // words[2] is the label value/ immediate
+		return translateJType(words[0], tmp, words[1]); // words[2] is the label value/ immediate
 	}
 }
 
@@ -143,6 +149,8 @@ int main(int argc, char** argv){
 			return 1;
 		}
         for (int i = 1; i < _all_lines; i++){
+			if (_source_all_lines[i].lType == LABEL)
+				continue;
             BYTECODE generated = Instruction_to_ByteCode(_source_all_lines[i], _source_all_lines + 1, _all_lines - 1);
 		    char binary[33];
 		    intToBinaryString(generated, binary);

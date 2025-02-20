@@ -59,7 +59,7 @@ BYTECODE translateSType(const char* instruction, const char* rs1, const char* rs
  * @param imm The immediate branch offset as a string.
  * @return BYTECODE The binary-encoded bytecode of the B-type instruction.
  */
-BYTECODE translateBType(const char* instruction, const char* rs1, const char* rs2, const char* imm);
+BYTECODE translateBType(const char* instruction, const char* rs1, const char* rs2, int imm);
 
 /**
  * @brief Translates a J-type instruction to its binary representation.
@@ -72,7 +72,7 @@ BYTECODE translateBType(const char* instruction, const char* rs1, const char* rs
  * @param rd The name of the destination register.
  * @return BYTECODE The binary-encoded bytecode of the J-type instruction.
  */
-BYTECODE translateJType(const char* instruction, const char* imm, const char* rd );
+BYTECODE translateJType(const char* instruction, int imm, const char* rd );
 
 
 #endif

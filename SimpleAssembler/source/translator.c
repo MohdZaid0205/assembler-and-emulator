@@ -104,17 +104,15 @@ BYTECODE translateSType(const char* instruction, const char* rs1, const char* rs
     return mergeSEncoding(encodedIMM, encodedRS2, encodedRS1, encodedINS.funct3, encodedINS.opcode);
 }
 
-BYTECODE translateBType(const char* instruction, const char* rs1, const char* rs2, const char* imm){
+BYTECODE translateBType(const char* instruction, const char* rs1, const char* rs2, int imm){
     Instruction encodedINS = instruction_encoding(instruction);
     BYTE encodedRS1 = register_encoding(rs1);
     BYTE encodedRS2 = register_encoding(rs2);
-    int encodedIMM = immediate_encoding(imm);
-    return mergeBEncoding(encodedIMM, encodedRS2, encodedRS1, encodedINS.funct3, encodedINS.opcode);
+    return mergeBEncoding(imm, encodedRS2, encodedRS1, encodedINS.funct3, encodedINS.opcode);
 }
 
-BYTECODE translateJType(const char* instruction, const char* imm, const char* rd ){
+BYTECODE translateJType(const char* instruction, int imm, const char* rd ){
     Instruction encodedINS = instruction_encoding(instruction);
     BYTE encodedRD_ = register_encoding(rd );
-    int encodedIMM = immediate_encoding(imm);
-    return mergeJEncoding(encodedIMM, encodedRD_, encodedINS.opcode);
+    return mergeJEncoding(imm, encodedRD_, encodedINS.opcode);
 }

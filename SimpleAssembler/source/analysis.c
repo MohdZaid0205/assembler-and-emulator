@@ -71,13 +71,11 @@ int calculate_label_occurence(const char* _lab, Line arr[], int length) {
 	return occurence;
 }
 
-const char* calculate_label_rAd(const char* _lab, unsigned int aAd, Line arr[], int length) {
-	char* value[20];
+int calculate_label_rAd(const char* _lab, unsigned int aAd, Line arr[], int length) {
 	for (int i = 0; i < length; i++) {
 		if (arr[i].lType == LABEL && strcmp(arr[i].content, _lab) == 0)
-			sprintf(value, "%d", arr[i].aAd - aAd);
+			return arr[i].aAd - aAd;
 	}
-	return value;
 }
 
 

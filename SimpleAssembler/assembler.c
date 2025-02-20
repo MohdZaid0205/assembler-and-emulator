@@ -56,12 +56,12 @@ int main(int argc, char** argv){
     // assuming that assembly source file is passed to this assembler as first argument
     // assuming format for input argparse to be:
     //     SimpleAssembler -file source.asm -out source.exe
-     const char* argparse_executable = argv[0];
-     const char* argparse_file_flags = argv[1];
-     const char* argparse_source_nme = argv[2];
-     const char* argparse_outs_flags = argv[3];
-     const char* argparse_output_nme = argv[4];
-     const char* argparse_paths_type = argv[5];
+    const char* argparse_executable = argv[0];
+    const char* argparse_file_flags = argv[1];
+    const char* argparse_source_nme = argv[2];
+    const char* argparse_outs_flags = argv[3];
+    const char* argparse_output_nme = argv[4];
+    const char* argparse_paths_type = argv[5];
 
     //const char* argparse_source_nme = "../temp/example.txt";
     //const char* argparse_output_nme = "../temp/output.txt";
@@ -138,6 +138,10 @@ int main(int argc, char** argv){
     if (syn && lex)
     {
 	    FILE* OUTPUT = fopen(_output_file_path, "w");
+		if (OUTPUT == NULL) {
+			trace_cstm_error(_output_file_path, "specified file path not found.");
+			return 1;
+		}
         for (int i = 1; i < _all_lines; i++){
             BYTECODE generated = Instruction_to_ByteCode(_source_all_lines[i], _source_all_lines + 1, _all_lines - 1);
 		    char binary[33];

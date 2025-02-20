@@ -4,9 +4,10 @@ bool syntacticalAnalysis(Line arr[], unsigned int length) {
 	bool status = true;
 	for (int i = 0; i < length; i++) {
 		if (arr[i].lType == LABEL) {
-			if (calculate_label_occurence(arr[i].content, arr, length) > 1)
+			if (calculate_label_occurence(arr[i].content, arr, length) > 1) {
 				trace_sytx_error(arr[i].lNo, arr[i].content, "Label is defined more than once");
 				status = false;
+			}
 		}
 		else if (!isLineSyntacticallyCorrect(arr[i])) {
 			status = false;
@@ -251,7 +252,7 @@ bool isLineSyntacticallyCorrect(Line line) {
 			trace_sytx_error(line.lNo, line.content, "Syntax Error in J-Type Instruction");
 		return s1 && s2 && s3;
 	}
-	trace_cstm_error("Instruction Type Error", "Instruction Type Not Found");
+	trace_sytx_error(line.lNo, line.content, "Instruction Type Not Found");
 	return false;
 }
 
@@ -259,10 +260,10 @@ bool isLineSyntacticallyCorrect(Line line) {
 bool isLineLexicallyCorrect(Line line) {
 	char lineType = line.lType;
 	if (lineType == LABEL) {
-		if (!is_valid_label(line.content))
+		if (!is_valid_label(line.content)) {
 			trace_name_error(line.lNo, line.content, "Label", "Label is not valid");
 			return false;
-
+		}
 		return true;
 	}
 
